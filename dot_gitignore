@@ -1,0 +1,47 @@
+# vscode https://github.com/github/gitignore/blob/ce5da10a3a43c4dd8bd9572eda17c0a37ee0eac1/Global/VisualStudioCode.gitignore
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.vsix
+
+# backups https://github.com/github/gitignore/blob/ce5da10a3a43c4dd8bd9572eda17c0a37ee0eac1/Global/Backup.gitignore
+*.bak
+*.gho
+*.ori
+*.orig
+*.tmp
+
+# archives https://github.com/github/gitignore/blob/ce5da10a3a43c4dd8bd9572eda17c0a37ee0eac1/Global/Archives.gitignore
+*.7z
+*.jar
+*.rar
+*.zip
+*.gz
+*.gzip
+*.tgz
+*.bzip
+*.bzip2
+*.bz2
+*.xz
+*.lzma
+*.cab
+*.xar
+*.iso
+*.tar
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+*.msi
+*.msm
+*.msp
+*.txz
+
+# gpg https://github.com/github/gitignore/blob/ce5da10a3a43c4dd8bd9572eda17c0a37ee0eac1/Global/GPG.gitignore
+secring.*

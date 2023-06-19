@@ -1,0 +1,8 @@
+git_protocol: https
+prompt: enabled
+aliases:
+  license: api "licenses/$1" -q .body
+editor:
+pager:
+http_unix_socket:
+browser:

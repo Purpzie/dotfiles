@@ -1,0 +1,3 @@
+[favorites.rust-template]
+description = "Basic Rust template."
+git = "https://github.com/purpzie/rust-template"

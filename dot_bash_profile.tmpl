@@ -1,0 +1,141 @@
+# only run in interactive mode
+case $- in
+	*i*) ;;
+	*) return;;
+esac
+
+export HISTCONTROL=ignoreboth
+export PROMPT_DIRTRIM=2
+unset HISTFILE
+export HISTFILE
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+addpath() {
+	case ":$PATH:" in
+		*:"$1":*) ;;
+		*) PATH="$PATH:$1";;
+	esac
+}
+
+addpath "$HOME/bin"
+addpath "$HOME/.local/bin"
+{{- if eq .chezmoi.osRelease.id "arch" }}
+alias listpkgs='pacman -Qqe | sort'
+{{- end }}
+{{- if eq .chezmoi.hostname "nzxt" }}
+addpath '/mnt/c/Users/purpzie/AppData/Local/Programs/VSCode/bin'
+export BROWSER='firefox'
+export EDITOR='code -w'
+{{- end }}
+
+# less
+export LESS='--mouse'
+
+# nnn
+export NNN_OPTS='HU'
+export NNN_PLUG='e:-!$EDITOR "$nnn";E:-!sudo -e "$nnn"*'
+
+# bat
+if (! command -v bat &>/dev/null) && command -v batcat &>/dev/null && [[ ! -a "$HOME/.local/bin/bat" ]]; then
+	mkdir -p "$HOME/.local/bin"
+	ln -s "$(which batcat)" ".local/bin/bat"
+fi
+if command -v bat &>/dev/null; then
+	export PAGER='bat -p'
+	export MANPAGER="sh -c 'col -bx | bat -pl man'"
+	NNN_PLUG="$NNN_PLUG;p:-!bat --paging=always --style=numbers,header \"\$nnn\"*"
+	alias bat='bat -p --tabs=2'
+	alias cat='bat'
+else
+	NNN_PLUG="$NNN_PLUG;p:-!less \"\$nnn\"*"
+fi
+
+# node
+export NODE_REPL_HISTORY=''
+
+# npm
+export NPM_CONFIG_PREFIX="$XDG_DATA_HOME/npm"
+addpath "$NPM_CONFIG_PREFIX/bin"
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+
+# pnpm
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+export NPM_CONFIG_GLOBAL_BIN_DIR="$PNPM_HOME/bin"
+addpath "$NPM_CONFIG_GLOBAL_BIN_DIR"
+
+# rust
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+addpath "$CARGO_HOME/bin"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+
+# docker
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+export AZURE_CONFIG_DIR="$XDG_CONFIG_HOME/azure"
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+
+export PATH
+unset -f addpath
+
+if [[ $TERM == @(xterm*|rxvt*|Eterm|aterm|kterm|gnome*) ]]; then
+	# color support
+	if [[ $EUID == 0 ]]; then
+		# we are root
+		COLOR='1' # red
+	else
+		# not root
+		{{- if eq .chezmoi.hostname "nzxt" }}
+		COLOR='5' # purple
+		{{- else if eq .chezmoi.hostname "raspi" }}
+		COLOR='2' # green
+		{{- else }}
+		COLOR='7' # white
+		{{- end }}
+	fi
+
+	PS1="\\[\\e[0;30;4${COLOR}m\\] \\u@\\h \\[\\e[3$COLOR;40m\\]\\[\\e[37;40m\\] \\w \\[\\e[0;30m\\]\\[\\e[m\\] "
+	unset COLOR
+	if command -v dircolors &>/dev/null; then
+		if [[ -r ~/.config/dircolors ]]; then
+			eval "$(dircolors -b ~/.config/dircolors)"
+		else
+			eval "$(dircolors -b)"
+		fi
+	fi
+else
+	# no color support
+	PS1='\u@\h \w > '
+fi
+
+# enable completion
+if [[ -z "$BASH_COMPLETION_VERSINFO" && -f /usr/share/bash-completion/bash_completion ]]; then
+	. /usr/share/bash-completion/bash_completion
+fi
+
+alias ls='ls --classify=auto --color=auto --group-directories-first'
+alias l='ls'
+alias la='ls -A'
+alias ll='ls -lh --time-style="+%Y/%m/%d %I:%M%P"'
+alias cleantmp='find /tmp -mindepth 1 -delete &>/dev/null; find /var/tmp -mindepth 1 -delete &>/dev/null'
+alias c='clear'
+
+alias n='nnn'
+nnn() {
+	if [[ -n $NNNLVL && "${NNNLVL:-0}" -ge 1 ]]; then
+		echo "nnn is already running"
+		return 1
+	fi
+	LC_COLLATE='C' command nnn "$@"
+	local lastd="$XDG_CONFIG_HOME/nnn/.lastd"
+	if [[ -f "$lastd" ]]; then
+		. "$lastd"
+		rm "$lastd"
+	fi
+}
+
+declare -r PURPZIE_BASH_PROFILE_RUN=1
+export PURPZIE_BASH_PROFILE_RUN

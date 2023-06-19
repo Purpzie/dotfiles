@@ -1,0 +1,5 @@
+README.md
+.vscode/
+{{- if ne .chezmoi.hostname "nzxt" }}
+.local/bin/firefox
+{{- end }}

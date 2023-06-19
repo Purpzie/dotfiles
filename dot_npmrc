@@ -1,0 +1,7 @@
+init-author-name=Purpzie
+init-license=MIT
+script-shell=/bin/bash
+
+# pnpm
+public-hoist-pattern[]=
+update-notifier=false

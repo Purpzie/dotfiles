@@ -1,0 +1,28 @@
+[user]
+	name = Purpzie
+	email = 25022704+Purpzie@users.noreply.github.com
+[alias]
+	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+	s = status -s
+	last = log -1 --stat --relative-date --abbrev-commit
+	tags = tag -l
+	branches = branch --all
+	remotes = remote --verbose
+	aliases = config --get-regexp alias
+	amend = commit --amend --reuse-message=HEAD
+	gca = gc --prune=now
+[init]
+	defaultBranch = main
+[core]
+	compression = 9
+	excludesFile = ~/.gitignore
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+[color "branch"]
+	current = bold magenta reverse
+	local = magenta
+	remote = cyan
+[credential "https://github.com"]
+	helper = !/usr/bin/gh auth git-credential
