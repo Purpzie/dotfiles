@@ -61,14 +61,10 @@ fi
 export NODE_REPL_HISTORY=''
 
 # npm
-export NPM_CONFIG_PREFIX="$XDG_DATA_HOME/npm"
-addpath "$NPM_CONFIG_PREFIX/bin"
-export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+addpath "$XDG_DATA_HOME/npm/bin"
 
 # pnpm
-export PNPM_HOME="$XDG_DATA_HOME/pnpm"
-export NPM_CONFIG_GLOBAL_BIN_DIR="$PNPM_HOME/bin"
-addpath "$NPM_CONFIG_GLOBAL_BIN_DIR"
+addpath "$XDG_DATA_HOME/pnpm/bin"
 
 # rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"

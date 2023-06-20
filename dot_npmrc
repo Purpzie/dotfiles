@@ -1,7 +1,12 @@
 init-author-name=Purpzie
 init-license=MIT
 script-shell=/bin/bash
+prefix=${XDG_DATA_HOME}/npm
+cache=${XDG_CACHE_HOME}/npm
 
 # pnpm
 public-hoist-pattern[]=
+global-bin-dir=${XDG_DATA_HOME}/pnpm/bin
+{{- if eq .chezmoi.osRelease.id "arch" }}
 update-notifier=false
+{{- end }}
