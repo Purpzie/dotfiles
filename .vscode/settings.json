@@ -3,7 +3,7 @@
 		"dot_bash*": "shellscript",
 		"dot_editorconfig": "editorconfig",
 		"dot_git*": "properties",
-		"dot_inputrc": "bat",
+		"inputrc": "bat",
 		"dot_npmrc": "properties"
 	}
 }
