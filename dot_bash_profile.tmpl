@@ -30,6 +30,8 @@ alias listpkgs='pacman -Qqe | sort'
 addpath '/mnt/c/Users/purpzie/AppData/Local/Programs/VSCode/bin'
 export BROWSER='firefox'
 export EDITOR='code -w'
+{{- else }}
+export EDITOR='nano'
 {{- end }}
 
 # less
