@@ -25,6 +25,7 @@ addpath "$HOME/bin"
 addpath "$HOME/.local/bin"
 {{- if eq .chezmoi.osRelease.id "arch" }}
 alias listpkgs='pacman -Qqe | sort'
+alias ls='ls --classify=auto --color=auto --group-directories-first'
 {{- end }}
 {{- if eq .chezmoi.hostname "nzxt" }}
 addpath '/mnt/c/Users/purpzie/AppData/Local/Programs/VSCode/bin'
@@ -118,7 +119,6 @@ if [[ -z "$BASH_COMPLETION_VERSINFO" && -f /usr/share/bash-completion/bash_compl
 	. /usr/share/bash-completion/bash_completion
 fi
 
-alias ls='ls --classify=auto --color=auto --group-directories-first'
 alias l='ls'
 alias la='ls -A'
 alias ll='ls -lh --time-style="+%Y/%m/%d %I:%M%P"'
